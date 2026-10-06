@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
 using System.Text;
@@ -63,6 +64,16 @@ namespace MiniProject___Checkers
                             button.Image = new Bitmap(Properties.Resources.Red_Piece, new Size(30, 30));
                             button.Tag = 'y';
                             break;
+                        case 'X':
+                            button.BackColor = Color.Gray;
+                            button.Image = new Bitmap(Properties.Resources.Black_King_Piece, new Size(30, 30));
+                            button.Tag = 'X';
+                            break;
+                        case 'Y':
+                            button.BackColor = Color.Gray;
+                            button.Image = new Bitmap(Properties.Resources.Red_King_Piece, new Size(30, 30));
+                            button.Tag = 'Y';
+                            break;
                         case 'W':
                             button.BackColor = Color.White;
                             button.Tag = null;
@@ -92,12 +103,18 @@ namespace MiniProject___Checkers
             {
                 if (counter == 0)
                 {
-                    if (clicked.Image != null && clicked.Tag.ToString() == newCheckers.Turn.ToString())
+                    if(clicked.Image != null)
                     {
-                        selected[counter] = clicked;
-                        txtGridInfo.Text = $"{row + 1}, {col + 1}";
-                        counter++;
+                        if (newCheckers.Turn == 'x' && clicked.Tag.ToString() == "X" 
+                            || newCheckers.Turn == 'y' && clicked.Tag.ToString() == "Y"
+                            || clicked.Tag.ToString() == newCheckers.Turn.ToString())
+                        {
+                            selected[counter] = clicked;
+                            txtGridInfo.Text = $"{row + 1}, {col + 1}";
+                            counter++;
+                        }
                     }
+
                 }
                 else if (counter == 1)
                 {
@@ -133,6 +150,16 @@ namespace MiniProject___Checkers
 
             CurrentBoard();
             ShowTurn();
+            if (!newCheckers.IsLoop)
+            {
+                MessageBox.Show(newCheckers.HasWon);
+
+                Form1 form1 = new Form1();
+
+                form1.Show();
+                this.Close();
+
+            }
 
         }
 
@@ -163,7 +190,7 @@ namespace MiniProject___Checkers
 
         private void SinglePlayer()
         {
-            MessageBox.Show("Single Player Game", "Game Starting");
+            
         }
 
         private void Multiplayer()
