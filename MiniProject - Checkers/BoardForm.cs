@@ -21,8 +21,8 @@ namespace MiniProject___Checkers
             InitializeComponent();
         }
 
+        //Visual Repesentation of the board
         Button[,] buttons = new Button[8, 8];
-
         void SetUp()
         {
             int space = 60;
@@ -40,6 +40,7 @@ namespace MiniProject___Checkers
             }
         }
 
+        //Repaints and updates the board based on positions
         void CurrentBoard()
         {
             for (int x = 0; x < newCheckers.RowSize; x++)
@@ -88,6 +89,7 @@ namespace MiniProject___Checkers
         }
         
 
+        //Checks for button click to make a decision
         private Button[] selected = new Button[2];
         private int counter = 0;
         private void AnyButton_Click(object sender, EventArgs e)
