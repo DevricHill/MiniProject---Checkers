@@ -8,20 +8,28 @@ namespace MiniProject___Checkers.Model
 
     internal class Checkers
     {
+        //Basic Board Info
         public int RowSize { get; } = 8;
         public int ColumnSize { get; } = 8;
         public char Turn { get; private set; }
 
 
+        //Reference Piece Actions
         public int[,] JumppedCoords;
         private bool isJumpped;
         public bool IsJumpped { get { return isJumpped; } }
+
+        private string _playerMoved;
+        public string PlayerMoved { get { return _playerMoved; } }
+
+        //Game Play Loop Conditions
         public bool IsLoop { get; private set; }
-        public string HasWon;
+        private string _hasWon;
+        public string HasWon { get { return _hasWon; } }
 
 
+        //Board Items
         public Dictionary<string, char> CheckerBoard;
-
         private char[] _pieces = { 'x', 'X', 'y', 'Y'};
 
 
@@ -32,6 +40,8 @@ namespace MiniProject___Checkers.Model
             isJumpped = false;
             IsLoop = true;
             Turn = SetRandomTurn();
+
+            _playerMoved = Turn == _pieces[0] ? "Black" : "Red";
             JumppedCoords = new int[1,2];
         }
 
@@ -41,6 +51,8 @@ namespace MiniProject___Checkers.Model
 
             if (Turn == _pieces[0]) Turn = _pieces[2];
             else Turn = _pieces[0];
+
+            _playerMoved = Turn == _pieces[0] ? "Black" : "Red";
         }
 
         private char SetRandomTurn()
@@ -48,12 +60,6 @@ namespace MiniProject___Checkers.Model
             Random random = new Random();
 
             return random.Next(0, 10) <= 5 ? 'x' : 'y';
-        }
-
-
-        public char GetPiece(int index)
-        {
-            return _pieces[index];
         }
 
         public void CreateBoard(int row, int column)
@@ -223,13 +229,13 @@ namespace MiniProject___Checkers.Model
         {
             if (!CheckerBoard.ContainsValue(_pieces[0]) && !CheckerBoard.ContainsValue(_pieces[1]))
             {
-                HasWon = $"Player Red has won!";
+                _hasWon = $"Player Red has won!";
                 return true;
             }
 
             if (!CheckerBoard.ContainsValue(_pieces[2]) && !CheckerBoard.ContainsValue(_pieces[3]))
             {
-                HasWon = $"Player Black has won!";
+                _hasWon = $"Player Black has won!";
                 return true;
             }
 

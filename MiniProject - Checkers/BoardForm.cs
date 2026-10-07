@@ -110,9 +110,9 @@ namespace MiniProject___Checkers
                             || clicked.Tag.ToString() == newCheckers.Turn.ToString())
                         {
                             selected[counter] = clicked;
-                            txtGridInfo.Text = $"{row + 1}, {col + 1}";
+                            txtGridInfo.Text = $"{newCheckers.PlayerMoved} Piece: {row + 1}-{col + 1}";
                             counter++;
-
+                            
                         }
                     }
 
@@ -131,9 +131,11 @@ namespace MiniProject___Checkers
                         selected[0].Image = null;
                         selected[0].Tag = null;
 
+                        txtGridInfo.Text = $"{newCheckers.PlayerMoved} moved {prevRow + 1}-{prevCol + 1} : {row + 1}-{col + 1}";
+
                         newCheckers.SwitchTurn();
 
-                        txtGridInfo.Text = $"Moved {prevRow + 1}, {prevCol + 1} to {row + 1}, {col + 1}";
+                        
                     }
                     else
                     {
