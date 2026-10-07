@@ -112,6 +112,7 @@ namespace MiniProject___Checkers
                             selected[counter] = clicked;
                             txtGridInfo.Text = $"{row + 1}, {col + 1}";
                             counter++;
+
                         }
                     }
 
@@ -137,8 +138,10 @@ namespace MiniProject___Checkers
                     else
                     {
                         txtGridInfo.Text = "That is not a valid choice";
+                        
                     }
 
+                    selected[0].BackColor = Color.Gray;
                     counter = 0;
                     selected = new Button[2];
                 }  

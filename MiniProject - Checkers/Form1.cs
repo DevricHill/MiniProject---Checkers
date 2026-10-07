@@ -19,5 +19,11 @@ namespace MiniProject___Checkers
             optionForm.Show();
             this.Hide();
         }
+
+        private void btnHelp_Click(object sender, EventArgs e)
+        {
+            HelpForm helpForm = new HelpForm();
+            helpForm.Show();
+        }
     }
 }

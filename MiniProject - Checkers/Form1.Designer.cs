@@ -31,13 +31,14 @@
             label1 = new Label();
             btnStart = new Button();
             btnExit = new Button();
+            btnHelp = new Button();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Snap ITC", 48F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(125, 100);
+            label1.Location = new Point(300, 100);
             label1.Name = "label1";
             label1.Size = new Size(369, 82);
             label1.TabIndex = 0;
@@ -45,7 +46,7 @@
             // 
             // btnStart
             // 
-            btnStart.Location = new Point(20, 200);
+            btnStart.Location = new Point(200, 225);
             btnStart.Name = "btnStart";
             btnStart.Size = new Size(552, 40);
             btnStart.TabIndex = 1;
@@ -55,7 +56,7 @@
             // 
             // btnExit
             // 
-            btnExit.Location = new Point(20, 250);
+            btnExit.Location = new Point(200, 350);
             btnExit.Name = "btnExit";
             btnExit.Size = new Size(552, 40);
             btnExit.TabIndex = 2;
@@ -63,12 +64,23 @@
             btnExit.UseVisualStyleBackColor = true;
             btnExit.Click += btnExit_Click;
             // 
+            // btnHelp
+            // 
+            btnHelp.Location = new Point(200, 287);
+            btnHelp.Name = "btnHelp";
+            btnHelp.Size = new Size(552, 40);
+            btnHelp.TabIndex = 3;
+            btnHelp.Text = "Help";
+            btnHelp.UseVisualStyleBackColor = true;
+            btnHelp.Click += btnHelp_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.Menu;
-            ClientSize = new Size(584, 361);
+            BackColor = SystemColors.InactiveCaption;
+            ClientSize = new Size(984, 561);
+            Controls.Add(btnHelp);
             Controls.Add(btnExit);
             Controls.Add(btnStart);
             Controls.Add(label1);
@@ -83,5 +95,6 @@
         private Label label1;
         private Button btnStart;
         private Button btnExit;
+        private Button btnHelp;
     }
 }

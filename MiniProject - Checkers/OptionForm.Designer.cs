@@ -36,17 +36,18 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(12, 9);
+            label1.Font = new Font("Snap ITC", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(275, 9);
             label1.Name = "label1";
-            label1.Size = new Size(83, 15);
+            label1.Size = new Size(230, 31);
             label1.TabIndex = 0;
             label1.Text = "Game Settings";
             // 
             // btnSinglePlayer
             // 
-            btnSinglePlayer.Location = new Point(12, 27);
+            btnSinglePlayer.Location = new Point(275, 100);
             btnSinglePlayer.Name = "btnSinglePlayer";
-            btnSinglePlayer.Size = new Size(83, 23);
+            btnSinglePlayer.Size = new Size(230, 31);
             btnSinglePlayer.TabIndex = 1;
             btnSinglePlayer.Text = "Single Player";
             btnSinglePlayer.UseVisualStyleBackColor = true;
@@ -54,9 +55,9 @@
             // 
             // btnMultiplayer
             // 
-            btnMultiplayer.Location = new Point(12, 56);
+            btnMultiplayer.Location = new Point(275, 200);
             btnMultiplayer.Name = "btnMultiplayer";
-            btnMultiplayer.Size = new Size(83, 23);
+            btnMultiplayer.Size = new Size(230, 31);
             btnMultiplayer.TabIndex = 2;
             btnMultiplayer.Text = "Multiplayer";
             btnMultiplayer.UseVisualStyleBackColor = true;
@@ -66,6 +67,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.ControlDark;
             ClientSize = new Size(800, 450);
             Controls.Add(btnMultiplayer);
             Controls.Add(btnSinglePlayer);
