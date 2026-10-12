@@ -103,29 +103,31 @@ namespace MiniProject___Checkers
 
             if (clicked.BackColor == Color.Gray) 
             {
-                if (counter == 0)
+                if (counter == 0 && clicked.Image != null)
                 {
-                    if(clicked.Image != null)
-                    {
                         if (newCheckers.Turn == 'x' && clicked.Tag.ToString() == "X" 
                             || newCheckers.Turn == 'y' && clicked.Tag.ToString() == "Y"
                             || clicked.Tag.ToString() == newCheckers.Turn.ToString())
                         {
                             selected[counter] = clicked;
                             txtGridInfo.Text = $"{newCheckers.PlayerMoved} Piece: {row + 1}-{col + 1}";
+                            newCheckers.ResetPostion();
+
+                            newCheckers.Insert((row, col), newCheckers.PrePosition);
                             counter++;
                             
                         }
-                    }
-
+                  
                 }
                 else if (counter == 1)
                 {
                     selected[1] = clicked;
 
                     int prevCol = selected[0].Location.X / 60 - 1, prevRow = selected[0].Location.Y / 60 - 1;
+                    newCheckers.Insert((row, col), newCheckers.NewPosition);
 
-                    if (newCheckers.PlaceChip(prevRow, prevCol, row, col))
+
+                    if (newCheckers.PlaceChip())
                     {
                         selected[1].Image = selected[0].Image;
                         selected[1].Tag = selected[0].Tag;
@@ -136,37 +138,29 @@ namespace MiniProject___Checkers
                         txtGridInfo.Text = $"{newCheckers.PlayerMoved} moved {prevRow + 1}-{prevCol + 1} : {row + 1}-{col + 1}";
 
                         newCheckers.SwitchTurn();
-
                         
                     }
                     else
                     {
-                        txtGridInfo.Text = "That is not a valid choice";
+                        txtGridInfo.Text = $"{row}-{col}: is not a valid choice";
                         
                     }
 
                     selected[0].BackColor = Color.Gray;
                     counter = 0;
                     selected = new Button[2];
+
                 }  
             }
             else
             {
+                counter = 0;
                 txtGridInfo.Text = $"That is not a playable area!";
             }
 
             CurrentBoard();
             ShowTurn();
-            if (!newCheckers.IsLoop)
-            {
-                MessageBox.Show(newCheckers.HasWon);
-
-                Form1 form1 = new Form1();
-
-                form1.Show();
-                this.Close();
-
-            }
+            GameProgress();
 
         }
 
@@ -205,6 +199,27 @@ namespace MiniProject___Checkers
             MessageBox.Show("Multiplayer Player Game", "Game Starting");
         }
 
+        private void GameProgress()
+        {
+            if (newCheckers.IsDraw())
+            {
+                MessageBox.Show("It's a draw!");
+                Form1 form1 = new Form1();
 
+                form1.Show();
+                this.Close();
+            }
+
+            if (!newCheckers.IsLoop)
+            {
+                MessageBox.Show(newCheckers.HasWon);
+
+                Form1 form1 = new Form1();
+
+                form1.Show();
+                this.Close();
+
+            }
+        }
     }
 }

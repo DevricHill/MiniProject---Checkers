@@ -24,6 +24,7 @@ namespace MiniProject___Checkers
         {
             HelpForm helpForm = new HelpForm();
             helpForm.Show();
+            
         }
     }
 }

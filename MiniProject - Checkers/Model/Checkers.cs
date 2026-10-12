@@ -5,7 +5,8 @@ using System.Text;
 
 namespace MiniProject___Checkers.Model
 {
-
+    public delegate void SelectPosition((int r, int c) position);
+    public delegate bool ModifyBoard((int row, int col) position, (int newRow, int newCol) newPosition);
     internal class Checkers
     {
         //Basic Board Info
@@ -15,6 +16,7 @@ namespace MiniProject___Checkers.Model
 
 
         //Reference Piece Actions
+        private int[,] _referencePosition;
         public int[,] JumppedCoords;
         private bool isJumpped;
         public bool IsJumpped { get { return isJumpped; } }
@@ -41,6 +43,7 @@ namespace MiniProject___Checkers.Model
             IsLoop = true;
             Turn = SetRandomTurn();
 
+            ResetPostion();
             _playerMoved = Turn == _pieces[0] ? "Black" : "Red";
             JumppedCoords = new int[1,2];
         }
@@ -82,24 +85,24 @@ namespace MiniProject___Checkers.Model
             }
         }
 
-        public bool IsInXRange(int row, int col, int newRow, int newCol)
+        public bool IsInXRange((int row, int col) position, (int newRow, int newCol) newPosition)
         {
-            if (CheckerBoard[$"{newRow} {newCol}"] != 'B')
+            if (CheckerBoard[$"{newPosition.newRow} {newPosition.newCol}"] != 'B')
             {
                 return false;
             }
 
-            int rowDifference = newRow - row;
-            int colDifference = Math.Abs(col - newCol);
+            int rowDifference = newPosition.newRow - position.row;
+            int colDifference = Math.Abs(position.col - newPosition.newCol);
 
-            switch (CheckerBoard[$"{row} {col}"]) 
+            switch (CheckerBoard[$"{position.row} {position.col}"]) 
             {
                 case 'x':
                     if (rowDifference == 1 && colDifference == 1) return true;
                     if (rowDifference == 2 && colDifference == 2)
                     {
-                        int midRow = (row + newRow) / 2;
-                        int midCol = (col + newCol) / 2;
+                        int midRow = (position.row + newPosition.newRow) / 2;
+                        int midCol = (position.col + newPosition.newCol) / 2;
                         char jumpped = CheckerBoard[$"{midRow} {midCol}"];
 
                         if(jumpped == _pieces[2] || jumpped == _pieces[3])
@@ -121,8 +124,8 @@ namespace MiniProject___Checkers.Model
                     if (positiveRowDifference == 1 && colDifference == 1) return true;
                     if (positiveRowDifference == 2 && colDifference == 2)
                     {
-                        int midRow = (row + newRow) / 2;
-                        int midCol = (col + newCol) / 2;
+                        int midRow = (position.row + newPosition.newRow) / 2;
+                        int midCol = (position.col + newPosition.newCol) / 2;
                         char jummped = CheckerBoard[$"{midRow} {midCol}"];
 
                         if(jummped == _pieces[2] ||  jummped == _pieces[3])
@@ -144,24 +147,24 @@ namespace MiniProject___Checkers.Model
             return false;
         }
 
-        public bool IsInYRange(int row, int col, int newRow, int newCol)
+        public bool IsInYRange((int row, int col) position, (int newRow, int newCol) newPosition)
         {
-            if (CheckerBoard[$"{newRow} {newCol}"] != 'B')
+            if (CheckerBoard[$"{newPosition.newRow} {newPosition.newCol}"] != 'B')
             {
                 return false;
             }
 
-            int rowDifference = newRow - row;
-            int colDifference = Math.Abs(col - newCol);
+            int rowDifference = newPosition.newRow - position.row;
+            int colDifference = Math.Abs(position.col - newPosition.newCol);
 
-            switch (CheckerBoard[$"{row} {col}"])
+            switch (CheckerBoard[$"{position.row} {position.col}"])
             {
                 case 'y':
                     if (rowDifference == - 1 && colDifference == 1) return true;
                     if (rowDifference == - 2 && colDifference == 2)
                     {
-                        int midRow = (row + newRow) / 2;
-                        int midCol = (col + newCol) / 2;
+                        int midRow = (position.row + newPosition.newRow) / 2;
+                        int midCol = (position.col + newPosition.newCol) / 2;
                         char jumpped = CheckerBoard[$"{midRow} {midCol}"];
 
                         if (jumpped == _pieces[0] || jumpped == _pieces[1])
@@ -183,8 +186,8 @@ namespace MiniProject___Checkers.Model
                     if (positiveRowDifference == 1 && colDifference == 1) return true;
                     if (positiveRowDifference == 2 && colDifference == 2)
                     {
-                        int midRow = (row + newRow) / 2;
-                        int midCol = (col + newCol) / 2;
+                        int midRow = (position.row + newPosition.newRow) / 2;
+                        int midCol = (position.col + newPosition.newCol) / 2;
                         char jummped = CheckerBoard[$"{midRow} {midCol}"];
 
                         if (jummped == _pieces[0] || jummped == _pieces[1])
@@ -206,21 +209,21 @@ namespace MiniProject___Checkers.Model
             return false;
         }
 
-        private void AtEnd(int row, int col)
+        private void AtEnd((int row, int col) position)
         {
             if (Turn == _pieces[2])
             {
-                if (row == 0 && CheckerBoard[$"{row} {col}"] == _pieces[2])
+                if (position.row == 0 && CheckerBoard[$"{position.row} {position.col}"] == _pieces[2])
                 {
-                    CheckerBoard[$"{row} {col}"] = _pieces[3];
+                    CheckerBoard[$"{position.row} {position.col}"] = _pieces[3];
                 }
             }
 
             if (Turn == _pieces[0])
             {
-                if (row == 7 && CheckerBoard[$"{row} {col}"] == _pieces[0])
+                if (position.row == 7 && CheckerBoard[$"{position.row} {position.col}"] == _pieces[0])
                 {
-                    CheckerBoard[$"{row} {col}"] = _pieces[1];
+                    CheckerBoard[$"{position.row} {position.col}"] = _pieces[1];
                 }
             }
         }
@@ -242,28 +245,28 @@ namespace MiniProject___Checkers.Model
             return false;
         }
 
-        public bool IsInBounds(int currentRow, int currentCol, int newRow, int newCol)
+        public bool IsInBounds()
         {
             switch (Turn) 
             {
                 case 'x':
-                    return IsInXRange(currentRow, currentCol, newRow, newCol);
+                    return Change(IsInXRange);
                 case 'y':
-                    return IsInYRange(currentRow, currentCol, newRow, newCol);
+                    return Change(IsInYRange);
             }
 
 
             return false;
         }
 
-        public bool PlaceChip(int currentRow, int currentCol, int newRow, int newCol)
+        public bool PlaceChip()
         {
-
-            if (IsInBounds(currentRow, currentCol, newRow, newCol))
+            
+            if (IsInBounds())
             {
-                CheckerBoard[$"{newRow} {newCol}"] = CheckerBoard[$"{currentRow} {currentCol}"];
-                CheckerBoard[$"{currentRow} {currentCol}"] = 'B';
-                AtEnd(newRow, newCol);
+                CheckerBoard[$"{_referencePosition[1, 0]} {_referencePosition[1, 1]}"] = CheckerBoard[$"{_referencePosition[0, 0]} {_referencePosition[0, 1]}"];
+                CheckerBoard[$"{_referencePosition[0, 0]} {_referencePosition[0, 1]}"] = 'B';
+                AtEnd((_referencePosition[1, 0], _referencePosition[1, 1]));
 
                 if (IsWon() && IsLoop)
                 {
@@ -276,6 +279,43 @@ namespace MiniProject___Checkers.Model
             return false;
         }
 
+        private int positionCount = 0;
+
+
+        public void PrePosition((int row, int col) position)
+        {
+            _referencePosition[0, 0] = position.row;
+            _referencePosition[0, 1] = position.col;
+            positionCount++;
+        }
+
+        public void NewPosition((int row, int col) position)
+        {
+            _referencePosition[1, 0] = position.row;
+            _referencePosition[1, 1] = position.col;
+        }
+
+        
+        public bool IsDraw()
+        {
+            
+            return false;
+        }
+
+        public void ResetPostion()
+        {
+            positionCount = 0;
+            _referencePosition = new int[2, 2];
+        }
+
+        public bool Change(ModifyBoard board)
+        {
+            return board((_referencePosition[0, 0], _referencePosition[0, 1]), (_referencePosition[1,0], _referencePosition[1,1]));
+        }
+
+        public void Insert((int row, int col) position, SelectPosition select) {
+            select(position);
+        }
 
     }
 }

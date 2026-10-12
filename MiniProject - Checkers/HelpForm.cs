@@ -13,6 +13,15 @@ namespace MiniProject___Checkers
         public HelpForm()
         {
             InitializeComponent();
+            rtxtInstruction.Text =
+                "First player is chosen at random." +
+                "\nEach turn: one move only." +
+                "\nStep: one square diagonally forward to an empty square." +
+                "\nJump: over one adjacent enemy piece to the empty square beyond. Remove that piece." +
+                "\nNo double jumps. One jump ends your turn." +
+                "\nKings: reach the far row to become a king (this ends your turn). " +
+                "\nKings step or jump forward or backward, still one square or one jump at a time." +
+                "\nWin: your opponent has no pieces or no legal moves.";
         }
     }
 }
