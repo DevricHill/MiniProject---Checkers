@@ -202,15 +202,6 @@ namespace MiniProject___Checkers
 
         private void GameProgress()
         {
-            if (newCheckers.IsDraw())
-            {
-                MessageBox.Show("It's a draw!");
-                Form1 form1 = new Form1();
-
-                form1.Show();
-                this.Close();
-            }
-
             if (!newCheckers.IsLoop)
             {
                 MessageBox.Show(newCheckers.HasWon);
@@ -219,8 +210,20 @@ namespace MiniProject___Checkers
 
                 form1.Show();
                 this.Close();
+                return;
 
             }
+
+            if (newCheckers.IsDraw())
+            {
+                MessageBox.Show("It's a draw!");
+                Form1 form1 = new Form1();
+
+                form1.Show();
+                this.Close();
+                return;
+            }
         }
+
     }
 }

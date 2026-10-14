@@ -62,7 +62,7 @@ namespace MiniProject___Checkers.Model
         {
             Random random = new Random();
 
-            return random.Next(0, 11) <= 5 ? 'x' : 'y';
+            return random.Next(2) == 0 ? 'x' : 'y';
         }
 
         public void CreateBoard(int row, int column)
