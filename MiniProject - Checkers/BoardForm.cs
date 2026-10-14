@@ -159,8 +159,9 @@ namespace MiniProject___Checkers
             }
 
             CurrentBoard();
-            ShowTurn();
             GameProgress();
+            ShowTurn();
+            
 
         }
 
