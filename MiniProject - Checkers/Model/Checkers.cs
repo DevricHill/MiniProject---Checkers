@@ -62,7 +62,7 @@ namespace MiniProject___Checkers.Model
         {
             Random random = new Random();
 
-            return random.Next(0, 10) <= 5 ? 'x' : 'y';
+            return random.Next(0, 11) <= 5 ? 'x' : 'y';
         }
 
         public void CreateBoard(int row, int column)
@@ -424,7 +424,7 @@ namespace MiniProject___Checkers.Model
                             {
                                 char jumpped = CheckerBoard[$"{prevRow} {rightCol}"];
 
-                                if(jumpped == _pieces[0] || jumpped == _pieces[1])
+                                if(jumpped == _pieces[2] || jumpped == _pieces[3])
                                 {
                                     if (CheckerBoard[$"{backJump} {rightCol + 1}"] == 'B') return true;
                                 }
@@ -476,7 +476,7 @@ namespace MiniProject___Checkers.Model
 
                                 if (jumpped == _pieces[0] || jumpped == _pieces[1])
                                 {
-                                    if (CheckerBoard[$"{jump} {leftCol - 1}"] == 'B') return true;
+                                    if (CheckerBoard[$"{backJump} {leftCol - 1}"] == 'B') return true;
                                 }
                             }
 
@@ -486,7 +486,7 @@ namespace MiniProject___Checkers.Model
 
                                 if (jumpped == _pieces[0] || jumpped == _pieces[1])
                                 {
-                                    if (CheckerBoard[$"{jump} {rightCol + 1}"] == 'B') return true;
+                                    if (CheckerBoard[$"{backJump} {rightCol + 1}"] == 'B') return true;
                                 }
                             }
                         }
@@ -548,7 +548,7 @@ namespace MiniProject___Checkers.Model
                         }
 
                         //Up Jump
-                        if (backJump >= 7)
+                        if (backJump >= 0)
                         {
 
                             if (leftCol - 1 >= 0)
@@ -585,7 +585,7 @@ namespace MiniProject___Checkers.Model
         {
             if (!CanBlackMove() && !CanRedMove()) return true;
             if (!CanBlackMove() && Turn == _pieces[0]) SwitchTurn();
-            if (!CanRedMove() && Turn == _pieces[2]);
+            if (!CanRedMove() && Turn == _pieces[2]) SwitchTurn();
             return false;
         }
 
