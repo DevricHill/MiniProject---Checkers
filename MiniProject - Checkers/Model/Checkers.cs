@@ -458,12 +458,12 @@ namespace MiniProject___Checkers.Model
                         {
                             if (leftCol >= 0)
                             {
-                                if (CheckerBoard[$"{nextRow} {leftCol}"] == 'B') return true;
+                                if (CheckerBoard[$"{prevRow} {leftCol}"] == 'B') return true;
                             }
 
                             if (rightCol <= 7)
                             {
-                                if (CheckerBoard[$"{nextRow} {rightCol}"] == 'B') return true;
+                                if (CheckerBoard[$"{prevRow} {rightCol}"] == 'B') return true;
                             }
                         }
 
@@ -583,7 +583,9 @@ namespace MiniProject___Checkers.Model
         
         public bool IsDraw()
         {
-            if(!CanBlackMove() && !CanRedMove()) return true;
+            if (!CanBlackMove() && !CanRedMove()) return true;
+            if (!CanBlackMove() && Turn == _pieces[0]) SwitchTurn();
+            if (!CanRedMove() && Turn == _pieces[2]);
             return false;
         }
 
